@@ -96,7 +96,7 @@ class Snaptik(Session):
             )
             ]
         )
-        return result, video_title
+        return result, str(video_title).encode("iso-8859-1").decode("utf-8", errors="ignore")
 
     def __iter__(self):
         yield from self.get_media()
