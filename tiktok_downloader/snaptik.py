@@ -68,11 +68,13 @@ class Snaptik(Session):
         dec = decoder(
             *literal_eval(findall(r"\(\".*?,.*?,.*?,.*?,.*?.*?\)", resp.text)[0])
         )
-        if dec.find(r"<div class=\"video-title\">"):
+        video_title = ""
+        if dec.find(r"<div class=\"video-title\"></div><span>") == -1:
+            video_title = dec[dec.find(r"<div class=\"video-title\">") + 27:]
+            video_title = video_title[:video_title.find("</div>")]
+        else:
             video_title = dec[dec.find(r"<div class=\"video-title\"></div><span>") + 39:]
             video_title = video_title[:video_title.find("</span>")]
-        else:
-            video_title = ""
         dec = pyjsparser.parse(re.sub(r"(async|await)", "", dec))["body"][0][
             "consequent"
         ]["body"][0]["consequent"]["body"][1]["expression"]["right"]["value"]
