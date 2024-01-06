@@ -1,3 +1,5 @@
+from typing import Tuple, List
+
 from httpx import AsyncClient
 from requests import Session
 from requests.models import InvalidURL
@@ -11,7 +13,7 @@ class TikWM(Session):
         super().__init__()
         self.url = url
 
-    def get_media(self) -> list[Download]:
+    def get_media(self) -> tuple[list[Download], str]:
         req = self.post(self.BASE_URL + '/api/', data=dict(url=self.url, count=12, cursor=0, web=1, hd=1))
         res = req.json()
         if res['code'] == 0:
@@ -32,7 +34,7 @@ class TikWM(Session):
                     self,
                     'music'
                 )
-            ]
+            ], res['data']['title']
         else:
             raise InvalidURL(res['msg'])
 

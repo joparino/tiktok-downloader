@@ -15,7 +15,7 @@ class Mdown(requests.Session):
             "(KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36"
         }
 
-    def get_media(self, url: str):
+    def get_media(self, url: str) -> tuple[list[Download], str]:
         bs = BeautifulSoup(self.get(self.BASE_URL).text, 'html.parser')
         form = {
             i['name']: i['value'] for i in bs.find_all(
@@ -46,6 +46,14 @@ class Mdown(requests.Session):
         )
         if 'err' in res.url:
             raise InvalidURL()
+        start = 0
+        n = 4
+        while start >= 0 and n > 1:
+            start = res.text.find(r'class="white-text">', start + len(r'class="white-text">'))
+            n -= 1
+        start = start + len(r'class="white-text">')
+        desc = res.text[start:]
+        desc = desc[:desc.find("</h2>")]
         return [
             Download(
                 i['href'],
@@ -55,7 +63,7 @@ class Mdown(requests.Session):
                 'html.parser'
             ).find_all('a', attrs={'target': '_blank'})
             if i['href'].strip('/').count('/') > 2
-        ]
+        ], desc
 
 
 class MdownAsync(AsyncClient):
