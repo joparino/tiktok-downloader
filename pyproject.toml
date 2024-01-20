@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tiktok-downloader"
-version = "0.1.0"
+version = "0.3.5"
 description = "tiktok downloader"
 authors = ["krypton-byte <rosid6434@gmail.com>"]
 license = "GPL-3.0"
@@ -15,7 +15,7 @@ requests = "^2.31.0"
 tqdm = "^4.66.1"
 rich = "^13.7.0"
 httpx = "^0.25.2"
-aiohttp = "^3.9.1"
+aiohttp = "^3.8.3"
 moviepy = "^1.0.3"
 js2py = "^0.74"
 
