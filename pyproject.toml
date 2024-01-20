@@ -16,7 +16,7 @@ tqdm = "^4.66.1"
 rich = "^13.7.0"
 httpx = "^0.25.2"
 aiohttp = "^3.8.3"
-moviepy = "^1.0.3"
+moviepy = "^2.0.0.dev2"
 js2py = "^0.74"
 
 
